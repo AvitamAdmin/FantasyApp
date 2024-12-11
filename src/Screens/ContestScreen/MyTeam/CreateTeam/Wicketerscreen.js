@@ -46,92 +46,79 @@ const Wicketerscreen = () => {
       const body = {page: 0, sizePerPage: 50};
       const headers = {Authorization: `Bearer ${token}`};
 
-      const response = await axios.post(`${api}/admin/player`, body, {
-        headers,
-      });
+      const response = await axios.post(`${api}/admin/player`, body, {headers});
+
+      // Filter players based on team IDs
       const filteredPlayers = response.data.playerList.filter(
         item => item.teamId == matchesTeam1Id || item.teamId == matchesTeam2Id,
       );
 
       setPlayer(filteredPlayers || []);
-      const playerRoleId = filteredPlayers.map(item => item.playerRoleId).filter(roleId=> roleId);
-      setPlayerRoleId(playerRoleId);
-      console.log(playerRoleId,"PlayerRoleID from PLayerList");
 
-      fetchPlayerRole(PlayerRoleId, token);
+      // Extract playerRoleId and pass directly to fetchPlayerRole
+      const playerRoleId = filteredPlayers
+        .map(item => item.playerRoleId)
+        .filter(Boolean);
+      setPlayerRoleId(playerRoleId); // For potential other use cases
+      console.log(playerRoleId, 'PlayerRoleID from PlayerList');
 
-      // console.log(response.data.playerList,"response from api");
+      // Directly pass playerRoleId
+      await fetchPlayerRole(playerRoleId, token);
     } catch (err) {
-      console.error(err);
-      console.error('Error details:', err.message, err.response);
+      console.error(
+        'Error fetching Player List:',
+        err.message,
+        err.response || '',
+      );
       setError('Error fetching Player List.');
     }
   };
 
   // fetch playerRole
 
-  // const fetchPlayerRole = async (playerRoleId, token) => {
-  //   try {
-  //     const body = {page: 0, sizePerPage: 50};
-  //     const headers = {Authorization: `Bearer ${token}`};
-
-  //     const response = await axios.post(`${api}/admin/playerRole`, body, {
-  //       headers,
-  //     });
-  //     const filteredPlayerRoles = response.data.playerRoleList.filter(
-  //       item =>
-  //         item.playerRole == 'Wicket-Keepers' && item.recordId == playerRoleId.includes(item.recordId)
-  //     );
-  //     const wicketKeeperRecordIds = filteredPlayerRoles.map(
-  //       (item) => item.recordId
-  //     );
-  //     setWicketKeeperId(wicketKeeperRecordIds);
-  //     console.log(wicketKeeperRecordIds, 'wicketKeeperRecordIds from playerRoleList');
-
-  //     // console.log(response.data.playerList,"response from api");
-  //   } catch (error) {}
-  // };
-
   const fetchPlayerRole = async (playerRoleId, token) => {
     try {
-      const body = { page: 0, sizePerPage: 50 };
-      const headers = { Authorization: `Bearer ${token}` };
-  
+      const body = {page: 0, sizePerPage: 50};
+      const headers = {Authorization: `Bearer ${token}`};
+
       const response = await axios.post(`${api}/admin/playerRole`, body, {
         headers,
       });
-  
+
       // Filter player roles
       const filteredPlayerRoles = response.data.playerRoleList.filter(
-        (item) =>
+        item =>
           item.playerRole === 'Wicket-Keepers' &&
           Array.isArray(playerRoleId) &&
-          playerRoleId.includes(item.recordId)
+          playerRoleId.includes(item.recordId),
       );
-  
+
       // Extract record IDs
       const wicketKeeperRecordIds = filteredPlayerRoles.map(
-        (item) => item.recordId
+        item => item.recordId,
       );
-  
+
       setWicketKeeperId(wicketKeeperRecordIds);
-      console.log(wicketKeeperRecordIds, 'wicketKeeperRecordIds from playerRoleList');
+
+      console.log(
+        wicketKeeperRecordIds,
+        'wicketKeeperRecordIds from playerRoleList',
+      );
     } catch (error) {
       console.error('Error fetching player roles:', error);
     }
   };
-  
 
   return (
     <ScrollView style={styles.container}>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : Player.length > 0 ? (
-        Player.map((item, index) => (
-          <View key={index} style={styles.playerItem}>
+        Player.map((item, index) => {
+          return item.playerRoleId == WicketKeeperId ? (
             <Text>{item.name}</Text>
-          </View>
-        ))
+          ) : null;
+        })
       ) : (
         <View>
           <Text>No Players Found</Text>

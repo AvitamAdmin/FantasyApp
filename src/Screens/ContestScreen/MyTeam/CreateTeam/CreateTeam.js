@@ -27,11 +27,11 @@ import {
 import {teamsArray} from "../../../../../jsonData/cskjson"
 // import DiscardTeam from "../../components/Model/DiscardTeam";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import BatterScreen from "./BatterScreen";
 import Allrounderscreen from "./Allrounderscreen";
 import Bowlerscreen from "./Bowlerscreen";
 import Wicketerscreen from "./Wicketerscreen";
 import LinearGradient from "react-native-linear-gradient";
+import BatManScreen from "./BatManScreen";
 
 
 
@@ -46,7 +46,7 @@ const WKRoute = () => (
 
 const BATRoute = () => (
   <View style={styles.contentContainer}>
-    <BatterScreen />
+    <BatManScreen />
     {/* Add your BAT-specific content here */}
   </View>
 );

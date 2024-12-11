@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const BatterScreen = () => {
+const BatManScreen = () => {
   return (
     <View>
       <Text>BatterScreen</Text>
@@ -9,6 +9,6 @@ const BatterScreen = () => {
   )
 }
 
-export default BatterScreen
+export default BatManScreen
 
 const styles = StyleSheet.create({})
