@@ -4,7 +4,7 @@ import React from 'react'
 const BatManScreen = () => {
   return (
     <View>
-      <Text>BatterScreen</Text>
+      <Text>BatterScreens</Text>
     </View>
   )
 }
