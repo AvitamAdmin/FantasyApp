@@ -4,15 +4,21 @@ const initialState = {
     matchShortName : "",
     matchesTeam1Id : "",
     matchesTeam2Id : "",
-    finalPlayerSelected: [],
     playerProfileInfo: [],
     impactPlayerLists: [],
     team1shortform: "",
     team2shortform: "",
-    
+    finalPlayerSelected: [],
+    teamIdForCount:"",
+
+
+   
+   
+
 
 
 }
+
 
 
 
@@ -46,9 +52,23 @@ const userSlice = createSlice({
             // Clear the impactPlayerSelected array and then add the new impact player
             state.team2shortform = [payload];
           },
+          setteamIdForCount: (state, { payload }) => {
+            // Clear the impactPlayerSelected array and then add the new impact player
+            state.teamIdForCount = [payload];
+          },
+          setfinalPlayerSelected: (state, { payload }) => {
+            if (state.finalPlayerSelected.includes(payload)) {
+              state.finalPlayerSelected = state.finalPlayerSelected.filter(
+                (id) => id !== payload
+              );
+            } else {
+              state.finalPlayerSelected.push(payload);
+            }
+          },
     }
 })
 
+
 export const {setMatchShortName,setMatchesTeam1Id,setMatchesTeam2Id,resetFinalPlayerSelected,initializePlayerLists,  getteam1shortform,
-   getteam2shortform,}= userSlice.actions;
+   getteam2shortform,setfinalPlayerSelected,getfinalPlayerSelected,setteamIdForCount}= userSlice.actions;
 export default userSlice.reducer;

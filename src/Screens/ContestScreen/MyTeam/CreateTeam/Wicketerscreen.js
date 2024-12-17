@@ -4,12 +4,20 @@ import {
   View,
   ActivityIndicator,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 import {api} from '../../../../envfile/api';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  setfinalPlayerSelected,
+  getplayerProfileInfo,
+  setteamIdForCount
+} from "./../../../../Redux/Slice";
 
 const Wicketerscreen = () => {
   const [Player, setPlayer] = useState([]); // State to hold player list
@@ -17,6 +25,9 @@ const Wicketerscreen = () => {
   const [loading, setLoading] = useState(false); // State to handle loading
   const [PlayerRoleId, setPlayerRoleId] = useState([]);
   const [WicketKeeperId, setWicketKeeperId] = useState([]);
+  const dispatch = useDispatch();
+
+ 
 
   const matchesTeam1Id = useSelector(state => state.fantasy.matchesTeam1Id);
   const matchesTeam2Id = useSelector(state => state.fantasy.matchesTeam2Id);
@@ -109,22 +120,187 @@ const Wicketerscreen = () => {
     }
   };
 
+ 
+  const [selectedPlayers, setSelectedPlayers] = useState({});
+  const handleAdd = (playerId,teamID) => { 
+    dispatch(setteamIdForCount(teamID))
+    setSelectedPlayers((prevState) => ({
+      ...prevState,
+      [playerId]: !prevState[playerId],
+    }));
+    dispatch(setfinalPlayerSelected(playerId));
+  };
+
+  const selectedPlayer = useSelector(
+    (state) => state.fantasy.finalPlayerSelected
+  );
+
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : Player.length > 0 ? (
-        Player.map((item, index) => {
-          return item.playerRoleId == WicketKeeperId ? (
-            <Text>{item.name}</Text>
-          ) : null;
-        })
+        <ScrollView 
+        style={{ backgroundColor: "#fff", width: wp("100%"), height: hp("100%") }}
+      >
+        <View style={{ flex: 1, alignItems: "center", gap: 5 }}>
+          <View style={{ padding: 5 }}>
+            <Text style={{ fontSize: hp(1.7) }}>Pick 1-8 All-rounder</Text>
+          </View>
+          <View
+            style={{
+              backgroundColor: "#dee4fa",
+              width: wp("100%"),
+              flexDirection: "row",
+            }}
+          >
+            <View
+              style={{
+                width: wp("100%"),
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <View
+                style={{
+                  width: wp("50%"),
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: hp(1.7) }}>Player</Text>
+              </View>
+              <View
+                style={{
+                  width: wp("20%"),
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: hp(1.7) }}>Points</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: wp("40%"),
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ fontSize: hp(1.7) }}>Selected  By %</Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ flex: 1, alignItems: "center", gap: 10 }}>
+            {
+              Player.map((item, index) => {
+                return item.playerRoleId == WicketKeeperId ? ( 
+                <Pressable
+                
+                  onPress={() => {
+                    handleAdd(item.recordId,item.teamId), console.log(item.recordId);
+                  }}
+                 key={index}
+                  style={{
+                    flexDirection: "row",
+                    width: wp("100%"),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderBottomWidth: 0.5,
+                    borderColor: "#ababab",
+                    paddingBottom: 10,
+                    backgroundColor: selectedPlayer.includes(item.recordId)
+                      ? "#ccd6ff"
+                      : "#fff",
+                    padding: 3,
+                  }}
+                >
+                  <View style={{ flexDirection: "row", width: wp("48%"), gap: 10 }}>
+                    <Pressable
+                      onPress={() => {
+                        navigation.navigate("PlayerInfo");
+                        dispatch(setplayerProfileInfo(player));
+                      }}
+                      style={{
+                        padding: 2,
+                        backgroundColor: "#fff",
+                        overflow: "hidden",
+                        width: wp("15%"),
+                        position: "relative",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* <Image
+                        source={{ uri: player.image }}
+                        style={{ width: 50, height: 50, borderRadius: 30 }}
+                      /> */}
+                      <View
+                        style={{
+                          paddingLeft: 5,
+                          paddingRight: 5,
+                          backgroundColor: "#7f7f7f",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: wp("15%"),
+                          borderRadius: 8,
+                          position: "absolute",
+                          bottom: 0,
+                        }}
+                      >
+                        <Text style={{ fontSize: hp(1.7), color: "#fff" }}>
+                          {/* {findTeamShortForm(player.id)} */}
+                        </Text>
+                      </View>
+                    </Pressable>
+                    <View
+                      style={{ width:  wp("70%"), justifyContent: "center", gap: 3 }}
+                    >
+                      <Text style={{ fontSize: hp(1.8), fontWeight: "bold" }}>
+                        {item.name}
+                      </Text>
+                      <Text style={{ fontSize: hp(1.8) }}>Played Last Match</Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      width:  wp("20%"),
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* <Text style={{ fontWeight: "bold", fontSize: hp(1.8) }}>{player.points}</Text> */}
+                  </View>
+                  <View 
+                    style={{
+                      width: wp("25%"),
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View style={{ width: wp("17%"), justifyContent: "center", justifyContent:'space-evenly' }}>
+                      <Text style={{ fontWeight: "bold" ,fontSize: hp(1.8)}}>80%</Text>
+                    </View>
+                    {selectedPlayer.includes(item.recordId) ? (
+                      <Text style={{color:"red"}}>Del</Text>
+                    ) : (
+                      <Text style={{color:"green"}}>Add</Text>
+                    )}
+                  </View>
+                </Pressable>): null})
+            }
+          </View>
+        </View>
+      </ScrollView>
       ) : (
         <View>
           <Text>No Players Found</Text>
         </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
