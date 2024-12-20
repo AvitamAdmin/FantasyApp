@@ -17,7 +17,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {setMatchShortName,setMatchesTeam1Id,setMatchesTeam2Id} from '../../Redux/Slice';
+import {setMatchShortName,setMatchesTeam1Id,setMatchesTeam2Id,setteam1ShortName,setteam2ShortName} from '../../Redux/Slice';
 
 const CricketHome = () => {
   const dispatch = useDispatch();
@@ -147,6 +147,8 @@ const CricketHome = () => {
                     dispatch(setMatchShortName(item.name));
                     dispatch(setMatchesTeam1Id(item.team1Id));
                     dispatch(setMatchesTeam2Id(item.team2Id));
+                    dispatch(setteam1ShortName(team1Data.shortName));
+                    dispatch(setteam2ShortName(team2Data.shortName));
 
                   }}
                   style={{
