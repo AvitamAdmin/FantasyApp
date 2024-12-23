@@ -1,11 +1,12 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LinearGradient from 'react-native-linear-gradient';
-import { useNavigation } from '@react-navigation/native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { ScrollView } from 'react-native';
 
-const LostNumber = () => {
+const GetTheApp = () => {
     const navigation = useNavigation();
     const [Like, setLike] = useState(false)
     const [Dislike, setDislike] = useState(false)
@@ -27,8 +28,8 @@ const LostNumber = () => {
         )
     }
   return (
-    <View style={{height: hp("100%"),width: wp("100%")}}>
-    <View style={{height: hp("18%"),width:wp("100%"),position:"relative"}}>
+    <View style={{height:hp("100%"),width:wp("100%")}}>
+    <View style={{height:hp("18%"),width:wp("100%"),position:"relative"}}>
   <LinearGradient
   style={{
     flex: 1,
@@ -36,21 +37,21 @@ const LostNumber = () => {
   colors={["#101632", "#2A3A83", "#374DAD"]}
 >
    <View style={{flexDirection:"column",display:"flex",justifyContent:"center",width:"100%",alignItems:"center",paddingTop:40,gap:20}}>
-   <View style={{width: wp("90%"),flexDirection:"row",justifyContent:"space-between",display:"flex"}}>
+   <View style={{width:wp("90%"),flexDirection:"row",justifyContent:"space-between",display:"flex"}}>
       <Pressable onPress={()=>navigation.goBack()}>
       <AntDesign name="arrowleft" size={24} color="#fff" />
       </Pressable>
       <View>
-        <Text style={{color:"#fff",fontWeight:"bold",fontSize:hp(2.3)}}>Help & Support</Text>
+        <Text style={{color:"#fff",fontWeight:"bold",fontSize:hp(2.2)}}>Help & Support</Text>
       </View>
       <View>
         
       </View>
   </View>
 
-  <View  style={{width: wp("90%"),flexDirection:"row",justifyContent:"space-between",display:"flex"}}>
+  <View  style={{width:wp("90%"),flexDirection:"row",justifyContent:"space-between",display:"flex"}}>
         <View style={{flexDirection:"row",gap:5,alignItems:"center"}}>
-             <Image source={require('../../../../assets/IMPACT11LogoExtended.png')}style={{height:15,width:80}}/>
+            <Image source={require('../../../../assets/IMPACT11LogoExtended.png')}style={{height:15,width:80}}/>
             <Text style={{fontWeight:"bold",color:"#fff",fontSize:28}}>|</Text>
             <Text style={{fontWeight:"bold",color:"#fff",}}>Help Center</Text>
         </View>
@@ -61,19 +62,21 @@ const LostNumber = () => {
 </View>
 
 <ScrollView>
-<View style={{width: wp("100%"),flexDirection:"column",display:"flex",justifyContent:"center",alignItems:"center",position:"relative",paddingTop:20,gap:15}}>
-          <View style={{width: wp("90%"),flexDirection:"column",display:"flex",justifyContent:"center",backgroundColor:"#fff",padding:15,gap:15}}>
+<View style={{width:wp("100%"),flexDirection:"column",display:"flex",justifyContent:"center",alignItems:"center",position:"relative",paddingTop:20,gap:15}}>
+          <View style={{width:wp("90%"),flexDirection:"column",display:"flex",justifyContent:"center",backgroundColor:"#fff",padding:15,gap:15}}>
             <View style={{flexDirection:"row",gap:5}}>
                 <Text style={{fontWeight:"bold",fontSize:hp(2.4),color:"#000"}}>Getting Started</Text>
                 <Text style={{color:"#6F6F6F"}}>/ About us</Text>
             </View>
             <View style={{flexDirection:"column",gap:40}}>
                  <View style={{flexDirection:"column",gap:15}}>
-                    <Text style={{fontWeight:"bold",fontSize:hp(2.5),color:"#000"}}>I’ve Lost my mobile number can I still 
-                    Login?</Text>
-                    <Text  style={{color:"#000"}}>Yes! In Impact11 we have given options to login with Mobile number or with email.
+                    <Text style={{fontWeight:"bold",fontSize:hp(2.3) ,color:"#000"}}>How to get the App?</Text>
+                    <Text  style={{color:"#000"}}>Android users can download the Impact11 app from the Google PlayStore.
                     </Text>
-                    <Text  style={{color:"#000"}}>In the landing page you can click on Login with email and login to your account entering the OTP received on your registered email. After login with your email your can head to My info & Settings page and update your new mobile number(The number already register with another account will not be accepted).</Text>
+                    <Text  style={{color:"#000"}}>iOS users can also search for ‘Impact11’ in the App Store to download the app.
+                    </Text>
+                    <Text  style={{color:"#000"}}>or</Text>
+                    <Text  style={{color:"#000"}}>Head to our website www.impacteleven.in on mobile web or desktop website and enter your mobile number to get the Download link.</Text>
                  </View>
 
                  <View style={{flexDirection:"row",gap:1}}>
@@ -84,7 +87,7 @@ const LostNumber = () => {
                  </View>
 
                  <View style={{flexDirection:"column",gap:15}}>
-                     <Text style={{fontWeight:"bold",fontSize:hp(2.4),color:"#000"}}>Was this article helpful</Text>
+                     <Text style={{fontWeight:"bold",fontSize:hp(2.3),color:"#000"}}>Was this article helpful</Text>
                      <View style={{flexDirection:"row",gap:20}}>
                      <Pressable onPress={()=>handleLike()}>
                      {
@@ -100,8 +103,8 @@ const LostNumber = () => {
                  </View>
             </View>
           </View>
-          <View style={{flexDirection:"row",width: wp("90%"),display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
-                <Text style={{fontWeight:"bold" ,color:"#000"}}>Can't find what you are looking for</Text>
+          <View style={{flexDirection:"row",width:wp("90%"),display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
+                <Text style={{fontWeight:"bold",color:"#000"}}>Can't find what you are looking for?</Text>
           </View>
            <View style={{flexDirection:"row",width:wp("90%"),display:"flex",justifyContent:"flex-start",alignItems:"center"}}>
                               <LinearGradient
@@ -145,6 +148,6 @@ const LostNumber = () => {
   )
 }
 
-export default LostNumber
+export default GetTheApp
 
 const styles = StyleSheet.create({})

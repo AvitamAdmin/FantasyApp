@@ -19,6 +19,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {setMatchShortName,setMatchesTeam1Id,setMatchesTeam2Id,setteam1ShortName,setteam2ShortName} from '../../Redux/Slice';
 
+
 const CricketHome = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -26,13 +27,15 @@ const CricketHome = () => {
   const [teams, setTeams] = useState([]);
   const [tournaments, setTournaments] = useState([]);
   const [error, setError] = useState(null);
-  
+ 
   const navigation = useNavigation();
+
 
   const convertBinaryToBase64 = binaryData => {
     if (!binaryData) return null;
     return Buffer.from(binaryData, 'binary').toString('base64');
   };
+
 
   const fetchMatchData = async token => {
     try {
@@ -48,6 +51,7 @@ const CricketHome = () => {
     }
   };
 
+
   const fetchTournamentData = async token => {
     try {
       const body = {page: 0, sizePerPage: 50};
@@ -62,6 +66,7 @@ const CricketHome = () => {
     }
   };
 
+
   const fetchTeamData = async token => {
     try {
       const body = {page: 0, sizePerPage: 50};
@@ -74,9 +79,11 @@ const CricketHome = () => {
     }
   };
 
+
   const fetchData = async () => {
     setLoading(true);
     setError(null);
+
 
     try {
       const token = await AsyncStorage.getItem('jwtToken');
@@ -93,19 +100,23 @@ const CricketHome = () => {
     }
   };
 
+
   useEffect(() => {
     fetchData();
   }, []);
 
+
   const getTeamData = teamId => {
     const team = teams.find(t => String(t.recordId) === String(teamId));
     if (!team) return {shortName: 'Unknown Team', logo: null};
+
 
     const logo = team.Image?.logo
       ? `data:image/png;base64,${convertBinaryToBase64(team.Image.logo)}`
       : null;
     return {shortName: team.shortName, logo, name: team.name};
   };
+
 
   const getTournamentData = tournamentId => {
     const tournament = tournaments.find(
@@ -115,12 +126,13 @@ const CricketHome = () => {
     return {name: tournament.name};
   };
 
+
   const handleMatchNavigate = (parentMainContestId, token) => {
     navigation.navigate('ContestScreen', {parentMainContestId, token});
 
+
     console.log(parentMainContestId, 'parentMainContestId: home screen');
   };
-
   return (
     <View>
       <ScrollView style={styles.container}>
