@@ -1,586 +1,246 @@
-import React, { useEffect, useState } from "react";
+import {Pressable, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions,
-  SafeAreaView,
-  Pressable,
-  BackHandler,
-} from "react-native";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-
-// import { Ionicons } from "@expo/vector-icons";
-// import { FontAwesome5 } from "@expo/vector-icons";
-// import { Entypo } from "@expo/vector-icons";
-// import { MaterialIcons } from "@expo/vector-icons";
-// import { AntDesign } from "@expo/vector-icons";
-
-import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  initializePlayerLists,
-  resetFinalPlayerSelected,
-} from "../../../../Redux/Slice";
-// import {teamsArray} from "../../../../../jsonData/cskjson";
-import {teamsArray} from "../../../../../jsonData/cskjson"
-// import DiscardTeam from "../../components/Model/DiscardTeam";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import Allrounderscreen from "./Allrounderscreen";
-import Bowlerscreen from "./Bowlerscreen";
-import Wicketerscreen from "./Wicketerscreen";
-import LinearGradient from "react-native-linear-gradient";
-import BatManScreen from "./BatManScreen";
-
-
-
-const initialLayout = { width: Dimensions.get("window").width };
-
-const WKRoute = () => (
-  <View style={styles.contentContainer}>
-    <Wicketerscreen />
-    {/* Add your WK-specific content here */}
-  </View>
-);
-
-const BATRoute = () => (
-  <View style={styles.contentContainer}>
-    <BatManScreen />
-    {/* Add your BAT-specific content here */}
-  </View>
-);
-
-const ARRoute = () => (
-  <View style={styles.contentContainer}>
-    <Allrounderscreen />
-    {/* Add your AR-specific content here */}
-  </View>
-);
-
-const BOWLRoute = () => (
-  <View style={styles.contentContainer}>
-    <Bowlerscreen />
-    {/* Add your BOWL-specific content here */}
-  </View>
-);
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import TopCreateScreen from './TopCreateScreen';
+import {resetFinalPlayerSelected} from '../../../../Redux/Slice'
 
 const CreateTeam = () => {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: "wk", title: "WK" },
-    { key: "bat", title: "BAT" },
-    { key: "ar", title: "AR" },
-    { key: "bowl", title: "BOWL" },
-  ]);
-
-  const renderScene = SceneMap({
-    wk: WKRoute,
-    bat: BATRoute,
-    ar: ARRoute,
-    bowl: BOWLRoute,
-  });
-
   const navigation = useNavigation();
-
-  const team1shortform = useSelector((state) => state.fantasy.team1shortform);
-  const team2shortform = useSelector((state) => state.fantasy.team2shortform);
-  const getTeam1logo = useSelector((state) => state.fantasy.team1logo);
-  const getTeam2logo = useSelector((state) => state.fantasy.team2logo);
-  const matchCountdown = useSelector((state) => state.fantasy.matchCountdown);
-  const finalPlayerSelecte = useSelector(
-    (state) => state.fantasy.finalPlayerSelected
-  );
-  console.log(finalPlayerSelecte.length, "length");
-  // Update countdown every second
-  const [countdown, setCountdown] = useState("");
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown(matchCountdown); // Update countdown state
-    }, 1000); // Update every second
-
-    return () => clearInterval(interval); // Clean up interval on unmount
-  }, [matchCountdown]);
+  const dispatch = useDispatch();
 
   const totalDots = 11;
 
   const playercount = useSelector(
-    (state) => state.fantasy.finalPlayerSelected.length
-  );
-  const Teamcount = useSelector((state) => state.fantasy.finalPlayerSelected);
-  const allPlayers = teamsArray.flatMap((team) => team.players);
-  const finalPlayerSelected = useSelector(
-    (state) => state.fantasy.finalPlayerSelected
+    state => state.fantasy.finalPlayerSelected.length,
   );
 
-  const selectedPlayers = allPlayers.filter((player) =>
-    finalPlayerSelected.includes(player.id)
-  );
+  const team1count = useSelector((state) =>state.fantasy.selectedTeam1.length);
+  
 
-  const cskPlayersCount = selectedPlayers.filter(
-    (player) => player.team_short_form === "CSK"
-  ).length;
-  const rcbPlayersCount = selectedPlayers.filter(
-    (player) => player.team_short_form === "RCB"
-  ).length;
-
-  const dispatch = useDispatch();
   const handleResetSelection = () => {
     dispatch(resetFinalPlayerSelected());
   };
 
-  dispatch(initializePlayerLists());
-  const [modal, setModal] = useState(false);
-
-  useEffect(() => {
-    const backAction = () => {
-      setModal(true); // Show the modal when back button is pressed
-      return true; // Prevent the default back action
-    };
-
-    const backHandler = BackHandler.addEventListener(
-      "hardwareBackPress",
-      backAction
-    );
-
-    return () => backHandler.remove(); // Clean up the event listener on unmount
-  }, []);
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <LinearGradient
         style={{
-          height: hp(13),
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          alignItems: "center",
+          height: hp(9),
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: wp('100%'),
         }}
-        colors={["#3b53bd", "#243373", "#192451", "#020202"]}
-      >
+        colors={['#3b53bd', '#243373', '#192451', '#020202']}>
         <View
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: wp("100%"),
-            padding: 5,
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: wp("37%"),
-              justifyContent: "space-around",
-            }}
-          >
-            <View style={{ width: wp("16%") }}>
-              <Pressable
-                onPress={
-                  // () => navigation.goBack()
-                  () => {
-                    setModal(true);
-                  }
-                }
-                style={styles.back}
-              >
-                {/* <Ionicons name="arrow-back" size={25} color="#fff" /> */}
-              </Pressable>
-            </View>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "flex-start",
-                width: wp("30%"),
-              }}
-            >
-              <View>
-                <Text style={{ fontWeight: "bold", color: "#fff", fontSize:hp(2) }}>
-                  CREATE TEAM 1
-                </Text>
-              </View>
-              <View>
-                <Text
-                  style={{ fontWeight: "700", fontSize: hp(1.8), color: "#fff" }}
-                >
-                  {matchCountdown}
-                </Text>
-              </View>
+            width: wp('90%'),
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+          }}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Text style={{color: '#fff', fontWeight: 'bold'}}>{'<'}-</Text>
+            </Pressable>
+            <View style={{flexDirection: 'column'}}>
+              <Text style={{color: '#fff', fontWeight: 'bold'}}>
+                Create Team 1
+              </Text>
+              <Text style={{color: '#fff', fontSize: hp(1.3)}}>
+                21M 30S left
+              </Text>
             </View>
           </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 20,
-              justifyContent: "flex-end",
-              alignItems: "center",
-              width: wp("60%"),
-              paddingRight: 5,
-            }}
-          >
+
+          <View style={{flexDirection: 'row', gap: 10}}>
             <View>
               {/* <FontAwesome5 name="question-circle" size={26} color="#fff" /> */}
             </View>
             <View
               style={{
                 borderWidth: 2.5,
-                borderColor: "#fff",
+                borderColor: '#fff',
                 borderRadius: 30,
-                fontWeight: "700",
+                fontWeight: '700',
                 paddingTop: 4,
                 paddingBottom: 4,
                 paddingRight: 2,
                 paddingLeft: 2,
-              }}
-            >
-              <Text style={{ fontWeight: "700", fontSize: hp(1.5), color: "#fff" }}>
+              }}>
+              <Text
+                style={{fontWeight: '700', fontSize: hp(1.5), color: '#fff'}}>
                 PTS
               </Text>
             </View>
           </View>
         </View>
       </LinearGradient>
-      <View style={{ flex: 1 }}>
-        {/* Header Section */}
+      <View
+        style={{
+          flexDirection: 'column',
+          display: 'flex',
+          width: wp('90%'),
+          justifyContent: 'center',
+        }}>
         <View
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: wp("100%"),
-            backgroundColor: "#fff",
-          }}
-        >
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              width: wp("100%"),
-              gap: 5,
-            }}
-          >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                backgroundColor: "#fff",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: wp("100%"),
-                paddingTop: 10,
-                paddingLeft: 20,
-                paddingRight: 20,
-              }}
-            >
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 10,
-                }}
-              >
-                <View>
-                  <Image
-                    source={{ uri: `${getTeam1logo}` }} // Provide a fallback value if getTeam1logo is undefined or null
-                    style={{
-                      backgroundColor: "#fff",
-                      resizeMode: "contain",
-                      width: 60,
-                      height: 60,
-                      borderRadius: 30,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ fontWeight: "bold" }}>{team1shortform}</Text>
-                  <Text style={{ fontWeight: "bold" }}>{cskPlayersCount}</Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 10,
-                }}
-              >
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ fontWeight: "bold" }}>{team2shortform}</Text>
-                  <Text style={{ fontWeight: "bold" }}>{rcbPlayersCount}</Text>
-                </View>
-                <View>
-                  <Image
-                    source={{ uri: `${getTeam2logo}` }} // Provide a fallback value if getTeam1logo is undefined or null
-                    style={{
-                      backgroundColor: "#fff",
-                      resizeMode: "contain",
-                      width: 60,
-                      height: 60,
-                      borderRadius: 30,
-                    }}
-                  />
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: wp("100%"),
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 10,
-                paddingLeft: 10,
-                paddingRight: 10,
-              }}
-            >
-              <View>
-                <Text style={{ fontSize: hp(2), color:"#000"}}>
-                  Maximum 7 Players for one team
-                </Text>
-              </View>
-              <View
-                style={{ display: "flex", flexDirection: "row", width: wp("100%") }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: wp("100%"),
-                  }}
-                >
-                  {[...Array(totalDots)].map((_, index) => (
-                    <View
-                      key={index}
-                      style={{
-                        width: 22,
-                        height: 7,
-                        marginHorizontal: 5,
-                        backgroundColor:
-                          index < playercount ? "#3e57c4" : "#a8b6f4",
-                      }}
-                    />
-                  ))}
-                </View>
-              </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  width: wp("95%"),
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  paddingLeft: 15,
-                  paddingRight: 15,
-                  paddingTop: 5,
-                }}
-              >
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: 3,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <View>
-                    <Text style={{ fontWeight: "500", color:"#000"}}>Players</Text>
-                  </View>
-                  <View>
-                    <Text style={{ fontWeight: "500",color:"#000" }}>{playercount}/11</Text>
-                  </View>
-                </View>
-                <View>
-                  <Pressable
-                    onPress={handleResetSelection}
-                    style={{
-                      borderWidth: 1,
-                      borderColor: "#4d4d4d",
-                      paddingLeft: 10,
-                      paddingRight: 10,
-                      borderRadius: 4,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text style={{color:"#000"}}>Reset</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: wp("100%"),
-                marginTop: 5,
-              }}
-            >
-              <LinearGradient
-                style={{
-                  height: 25,
-                  display: "flex",
-                  flexDirection: "row",
-                  width: wp("100%"),
-                }}
-                colors={["#7185d8", "#c2cffe"]}
-                start={{ x: 1, y: 0 }}
-                end={{ x: 0, y: 0 }}
-              >
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: wp("100%"),
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <View>
-                    {/* <Entypo name="location-pin" size={24} color="black" /> */}
-                  </View>
-                  <View>
-                    <Text style={{ fontWeight: "500", fontSize: hp(2) }}>
-                      M.Chinnaswamy Stadium, Bangalore
-                    </Text>
-                  </View>
-                </View>
-              </LinearGradient>
-            </View>
+            width: wp('90%'),
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            {/* <Image/> */}
+            <Text style={{color: '#000'}}>{team1count}</Text>
+          </View>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            {/* <Image/> */}
+            <Text style={{color: '#000'}}>1</Text>
           </View>
         </View>
-
-        {/* Tab View Section */}
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={initialLayout}
-          renderTabBar={(props) => (
-            <TabBar
-              {...props}
-              indicatorStyle={{ backgroundColor: "blue" }}
-              style={{ backgroundColor: "white" }}
-              labelStyle={{ color: "black", fontWeight: "bold" }}
-            />
-          )}
-        />
+      </View>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: wp('100%'),
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
+        }}>
+        <View>
+          <Text style={{fontSize: hp(1.5), color: '#000'}}>
+            Maximum 7 Players for one team
+          </Text>
+        </View>
+        <View
+          style={{display: 'flex', flexDirection: 'row', width: wp('100%')}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: wp('100%'),
+            }}>
+            {[...Array(totalDots)].map((_, index) => (
+              <View
+                key={index}
+                style={{
+                  width: 22,
+                  height: 7,
+                  marginHorizontal: 5,
+                  backgroundColor: index < playercount ? '#3e57c4' : '#a8b6f4',
+                }}
+              />
+            ))}
+          </View>
+        </View>
         <View
           style={{
-            display: "flex",
-            flexDirection: "row",
-            width: wp("100%"),
-            justifyContent: "space-around",
-            alignItems: "center",
-            padding: 10,
-          }}
-        >
-          <Pressable
-            onPress={() => navigation.navigate("TeamPreview")}
+            display: 'flex',
+            flexDirection: 'row',
+            width: wp('95%'),
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingLeft: 15,
+            paddingRight: 15,
+            paddingTop: 5,
+          }}>
+          <View
             style={{
-              backgroundColor: "#000",
-              width: wp("45%"),
-              borderWidth: 1.5,
-              borderColor: "#000",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 20,
-              padding: 7,
+              display: 'flex',
+              flexDirection: 'row',
               gap: 3,
-            }}
-          >
-            <View style={{}}>
-              {/* <AntDesign name="eyeo" size={24} color="#fff" /> */}
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View>
+              <Text
+                style={{fontWeight: '500', color: '#000', fontSize: hp(1.5)}}>
+                Players
+              </Text>
             </View>
-            <Text
-              style={{
-                color: "#fff",
-                paddingRight: 5,
-                fontWeight: "bold",
-                fontSize: hp(2),
-              }}
-            >
-              TEAM PREVIEW
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate("SelectImpactPlayer")}
-            style={{
-              backgroundColor: "#3e57c4",
-              width: wp("45%"),
-              borderWidth: 1.5,
-              borderColor: "#fff",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              borderRadius: 20,
-              padding: 7,
-              gap: 3,
-            }}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                paddingLeft: 5,
-                fontWeight: "bold",
-                fontSize: hp(2),
-              }}
-            >
-              NEXT
-            </Text>
-            <View style={{}}>
-              {/* <MaterialIcons name="skip-next" size={24} color="#fff" /> */}
+            <View>
+              <Text
+                style={{fontWeight: '500', color: '#000', fontSize: hp(1.5)}}>
+                {playercount}/11
+              </Text>
             </View>
-          </Pressable>
+          </View>
+          <View>
+            <Pressable
+              onPress={handleResetSelection}
+              style={{
+                borderWidth: 1,
+                borderColor: '#4d4d4d',
+                paddingLeft: 10,
+                paddingRight: 10,
+                borderRadius: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{color: '#000', fontSize: hp(1.5)}}>Reset</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-      {/* <DiscardTeam visible={modal} onclose={() => setModal(false)} /> */}
+
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: wp('100%'),
+          marginTop: 5,
+        }}>
+        <LinearGradient
+          style={{
+            height: 25,
+            display: 'flex',
+            flexDirection: 'row',
+            width: wp('100%'),
+          }}
+          colors={['#7185d8', '#c2cffe']}
+          start={{x: 1, y: 0}}
+          end={{x: 0, y: 0}}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: wp('100%'),
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View>
+              {/* <Entypo name="location-pin" size={24} color="black" /> */}
+            </View>
+            <View>
+              <Text style={{fontWeight: '500', fontSize: hp(1.5)}}>
+                M.Chinnaswamy Stadium, Bangalore
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </View>
+
+      <View style={{flex:1}}>
+        <TopCreateScreen/>
+      </View>
     </SafeAreaView>
   );
 };
 
 export default CreateTeam;
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  back: {
-    padding: 10,
-    
-  },
-});
+const styles = StyleSheet.create({});
