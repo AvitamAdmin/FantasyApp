@@ -124,10 +124,14 @@ const CricketHome = () => {
   return (
     <View>
       <ScrollView style={styles.container}>
-        {loading && <ActivityIndicator size="large" color="#0000ff" />}
-        {error && <Text style={styles.error}>{error}</Text>}
+      {error && <Text style={styles.error}>{error}</Text>}
 
-        {data.map((item, index) => {
+        {loading ? (<View style={{backgroundColor:"#fff",height:hp("80%"),display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+         <View>
+         <ActivityIndicator size="50" color="#0000ff" />
+         <Text style={{color:"#000",fontSize:hp(2)}}>Loading...</Text>
+         </View>
+        </View>):(<View>{data.map((item, index) => {
           const team1Data = getTeamData(item.team1Id);
           const team2Data = getTeamData(item.team2Id);
           const tournament = getTournamentData(item.tournamentId);
@@ -193,12 +197,12 @@ const CricketHome = () => {
                         }}>
                         <Image
                           source={require('../../../assets/Borderradius.png')}
-                          style={{height: 20, width: 200}}
+                          style={{height: 22, width: 210}}
                         />
                         <Text
                           style={{
                             fontSize: hp(1.5),
-                            padding: 5,
+                            padding: 8,
                             color: '#fff',
                             fontWeight: 'bold',
                             position: 'absolute',
@@ -217,7 +221,7 @@ const CricketHome = () => {
                         }}>
                         <Text
                           style={{
-                            fontSize: hp(1.5),
+                            fontSize: hp(1.2),
                             color: '#19c869',
                             fontWeight: '900',
                           }}>
@@ -263,11 +267,11 @@ const CricketHome = () => {
                                 }}
                               />
                             ) : (
-                              <Text>No Logo</Text>
+                              <Text style={{color:"#000"}}>No Logo</Text>
                             )}
                           </View>
                           <View>
-                            <Text style={{fontWeight: 'bold'}}>
+                            <Text style={{fontWeight: 'bold',color:"#000"}}>
                               {team1Data.shortName}
                             </Text>
                           </View>
@@ -287,7 +291,7 @@ const CricketHome = () => {
                               width: 135,
                               justifyContent: 'center',
                             }}>
-                            <Text style={{fontSize: hp(1.5)}} numberOfLines={1}>
+                            <Text style={{fontSize: hp(1.5),color:"#000"}} numberOfLines={1}>
                               {team1Data.name}
                               {/* Chennai super kings */}
                             </Text>
@@ -337,7 +341,7 @@ const CricketHome = () => {
                             gap: 10,
                           }}>
                           <View>
-                            <Text style={{fontWeight: 'bold'}}>
+                            <Text style={{fontWeight: 'bold',color:"#000"}}>
                               {team2Data.shortName}
                             </Text>
                           </View>
@@ -346,7 +350,7 @@ const CricketHome = () => {
                             {team2Data.logo ? (
                               <Image source={{uri: team2Data.logo}} />
                             ) : (
-                              <Text>No Logo</Text>
+                              <Text style={{color:"#000"}}>No Logo</Text>
                             )}
                           </View>
                         </View>
@@ -365,7 +369,7 @@ const CricketHome = () => {
                               width: 135,
                               justifyContent: 'center',
                             }}>
-                            <Text style={{fontSize: hp(1.5)}} numberOfLines={1}>
+                            <Text style={{fontSize: hp(1.5),color:"#000"}} numberOfLines={1}>
                               {team2Data.name}
                               {/* Chennai super kings */}
                             </Text>
@@ -387,7 +391,7 @@ const CricketHome = () => {
                         paddingRight: 10,
                       }}>
                       <View>
-                        <Text style={{fontWeight: 'bold'}}>
+                        <Text style={{fontWeight: 'bold',color:"#000"}}>
                           1 Team 3 Contests
                         </Text>
                       </View>
@@ -400,7 +404,9 @@ const CricketHome = () => {
               </View>
             </View>
           );
-        })}
+        })}</View>)}
+
+        
       </ScrollView>
     </View>
   );

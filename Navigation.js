@@ -16,15 +16,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Import Screens
-import LoginWithEmail from './src/Auth/LoginScreen';
 import Nameregister from './src/Auth/NameRegister';
-import OtpScreen from './src/Auth/OtpScreen';
 import Profile from './src/BottomTabs/Profile';
 import ReferAndEarn from './src/BottomTabs/ReferAndEarn';
 import FantacyPointsSystems from './src/DrawerScreens/FantacyPointsSystems';
 import HowToPlay from './src/DrawerScreens/HowToPlay';
 import AboutUs from './src/DrawerScreens/AboutUs';
-import MyinfoAndSettings from './src/DrawerScreens/MyinfoAndSettings';
 import HelpAndSupport from './src/DrawerScreens/HelpAndSupport';
 import Cricket from './src/BottomTabs/TopScreens/Cricket';
 import Football from './src/BottomTabs/TopScreens/Football';
@@ -41,6 +38,12 @@ import MyTeam from './src/Screens/ContestScreen/MyTeam/MyTeam';
 import CreateTeam from './src/Screens/ContestScreen/MyTeam/CreateTeam/CreateTeam';
 import More from './src/DrawerScreens/More';
 import ContestHeader from './src/Screens/ContestScreen/ContestHeader';
+import CarouselScreen from './src/Auth/CarouselScreen';
+import RegisterPage from './src/Auth/RegisterPage';
+import LoginPhone from './src/Auth/LoginPhone';
+import Otp from './src/Auth/otp';
+import LoginEmail from './src/Auth/LoginEmail';
+import CricketPonits from './src/DrawerScreens/Cricket';
 
 const getHeaderRight = () => {
   const navigation = useNavigation(); // Get navigation context
@@ -221,9 +224,16 @@ function StackNavigator({isAuthenticated, setIsAuthenticated}) {
         </>
       ) : (
         <>
-          <Stack.Screen name="LoginWithEmail" component={LoginWithEmail} />
-          <Stack.Screen name="Nameregister" component={Nameregister} />
-          <Stack.Screen name="OTP" component={OtpScreen} />
+         <Stack.Screen name="LoginEmail" component={LoginEmail} options={{headerShown: false}} />
+        <Stack.Screen name="otp" component={Otp} options={{headerShown: false}} />
+        <Stack.Screen name="CarouselScreen" component={CarouselScreen} options={{headerShown: false}} />
+        <Stack.Screen name="LoginPhone" component={LoginPhone} options={{headerShown: false}} />
+        <Stack.Screen name="RegisterPage" component={RegisterPage} options={{headerShown: false}} />
+          <Stack.Screen name="Nameregister" component={Nameregister} options={{headerShown: false}} />
+          <Stack.Screen name="CricketPonits" component={CricketPonits} options={{headerShown: false}} />
+          <Stack.Screen name="Football" component={Football} options={{headerShown: false}} />
+
+          
           <Stack.Screen name="DrawerNavigation">
             {() => <DrawerNavigation setIsAuthenticated={setIsAuthenticated} />}
           </Stack.Screen>
@@ -265,7 +275,7 @@ function DrawerNavigation({setIsAuthenticated}) {
         options={{
           headerShown: false,
         }}
-        name="How to Play"
+        name="How To Play?"
         component={HowToPlay}
       />
       <Drawer.Screen
@@ -276,7 +286,7 @@ function DrawerNavigation({setIsAuthenticated}) {
         component={Legality}
       />
       <Drawer.Screen
-        name="TermsAndCondition"
+        name="Terms & Condition"
         component={TermsAndCondition}
         options={{
           headerShown: false,
@@ -289,13 +299,7 @@ function DrawerNavigation({setIsAuthenticated}) {
           headerShown: false,
         }}
       />
-      <Drawer.Screen
-        name="More"
-        component={More}
-        options={{
-          headerShown: false,
-        }}
-      />
+    
     </Drawer.Navigator>
   );
 }

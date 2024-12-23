@@ -83,7 +83,7 @@ const DrawerHeader = (props) => {
 
       {/* Drawer Items */}
       <DrawerItemList {...props} />
-      {/* <DrawerItem label="More" onPress={() => navigateTo("More")} /> */}
+     
       <Text style={styles.versionText}>VERSION 1.22.0</Text>
     </DrawerContentScrollView>
   );
@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     paddingLeft: 7
   },
   versionText: {
-    marginTop: 20,
-    textAlign: "center",
+    marginTop: 10,
+    fontSize: hp(1.5),   
     color: "gray",
   },
 });
