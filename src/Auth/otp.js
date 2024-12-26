@@ -284,16 +284,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'flex-start',
       flexDirection:"row",
-     width:"95%",
+     width:"100%",
+     paddingLeft:8
     },
     goBackIcon: {
-    
     justifyContent:"flex-start",
-    width: wp("15%")
+    width: wp("10%")
   },
    headerTextContainer: {
     flexDirection: 'column', // Stack title and subtitle vertically
-   
+    width: wp("90%")
 },
 });
 
