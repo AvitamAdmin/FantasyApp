@@ -44,6 +44,47 @@ import LoginPhone from './src/Auth/LoginPhone';
 import Otp from './src/Auth/otp';
 import LoginEmail from './src/Auth/LoginEmail';
 import CricketPonits from './src/DrawerScreens/Cricket';
+import GetTheApp from './src/DrawerScreens/Help&SupportFiles/GetStarted/GetTheApp';
+import GettingStarted from './src/DrawerScreens/Help&SupportFiles/GetStarted/GettingStarted';
+import Impact11 from './src/DrawerScreens/Help&SupportFiles/GetStarted/Impact11';
+import LostNumber from './src/DrawerScreens/Help&SupportFiles/GetStarted/LostNumber';
+import QOTP from './src/DrawerScreens/Help&SupportFiles/GetStarted/QOTP';
+import QSignUp from './src/DrawerScreens/Help&SupportFiles/GetStarted/QSignUp';
+import StillPlay from './src/DrawerScreens/Help&SupportFiles/GetStarted/StillPlay';
+import PlayingOnImpact from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/PlayingOnImpact';
+import EditTeams from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/EditTeams';
+import EditAfterMatch from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/EditAfterMatch';
+import DeleteTeam from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/DeleteTeam';
+import SwitchTeams from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/SwitchTeams';
+import MultipleTeam from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/MultipleTeam';
+import IncorrectLineup from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/IncorrectLineup';
+import PlayerDoNotPlay from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/PlayerDoNotPlay';
+import ContestJoin from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/ContestJoin';
+import PublicPrivateContest from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/PublicPrivateContest';
+import FlexibileContest from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/FlexibileContest';
+import UnfilledContest from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/UnfilledContest';
+import FindContest from './src/DrawerScreens/Help&SupportFiles/PlayOnImpact/FindContest';
+import ScorePoints from './src/DrawerScreens/Help&SupportFiles/Scores&Points/ScorePoints';
+import ScoresAndPoints from './src/DrawerScreens/Help&SupportFiles/Scores&Points/ScoresAndPoints';
+import PointsNotUpdated from './src/DrawerScreens/Help&SupportFiles/Scores&Points/PointsNotUpdated';
+import PointsForSuperOver from './src/DrawerScreens/Help&SupportFiles/Scores&Points/PointsForSuperOver';
+import SubstitutePlayer from './src/DrawerScreens/Help&SupportFiles/Scores&Points/SubstitutePlayer';
+import HSMyBalance from './src/DrawerScreens/Help&SupportFiles/MyBalance/HSMyBalance';
+import WithDrawWinnings from './src/DrawerScreens/Help&SupportFiles/MyBalance/WithDrawWinnings';
+import WithdrawalRequest from './src/DrawerScreens/Help&SupportFiles/MyBalance/WithdrawalRequest';
+import CheckStatusWithdrawal from './src/DrawerScreens/Help&SupportFiles/MyBalance/CheckStatusWithdrawal';
+import WithdrawalBankAccDetails from './src/DrawerScreens/Help&SupportFiles/MyBalance/WithdrawalBankAccDetails';
+import WithdrawalRequestCancel from './src/DrawerScreens/Help&SupportFiles/MyBalance/WithdrawalRequestCancel';
+import DiscountBonus from './src/DrawerScreens/Help&SupportFiles/MyBalance/DiscountBonus';
+import AddCashMyBalance from './src/DrawerScreens/Help&SupportFiles/MyBalance/AddCashMyBalance';
+import ManageWallets from './src/DrawerScreens/Help&SupportFiles/MyBalance/ManageWallets';
+import ManageCards from './src/DrawerScreens/Help&SupportFiles/MyBalance/ManageCards';
+import Winnings from './src/DrawerScreens/Help&SupportFiles/Winnings/Winnings';
+import InformCashPrize from './src/DrawerScreens/Help&SupportFiles/Winnings/InformCashPrize';
+import ReceiveMyWinnings from './src/DrawerScreens/Help&SupportFiles/Winnings/ReceiveMyWinnings';
+import Distributed from './src/DrawerScreens/Help&SupportFiles/Winnings/Distributed';
+import TaxWinnings from './src/DrawerScreens/Help&SupportFiles/Winnings/TaxWinnings';
+// import ProfileAndVerification from './src/DrawerScreens/Help&SupportFiles/Profile&Verification/ProfileAndVerification';
 
 const getHeaderRight = () => {
   const navigation = useNavigation(); // Get navigation context
@@ -221,9 +262,59 @@ function StackNavigator({isAuthenticated, setIsAuthenticated}) {
             name="CreateTeam"
             component={CreateTeam}
           />
+
+        
+          <Stack.Screen name="GettingStarted" component={GettingStarted} options={{headerShown: false}} />
+          <Stack.Screen name="Impact11" component={Impact11} options={{headerShown: false}} />
+          <Stack.Screen name="GetTheApp" component={GetTheApp} options={{headerShown: false}} />
+          <Stack.Screen name="LostNumber" component={LostNumber} options={{headerShown: false}} />
+          <Stack.Screen name="QOTP" component={QOTP} options={{headerShown: false}} />
+          <Stack.Screen name="QSignUp" component={QSignUp} options={{headerShown: false}} />
+          <Stack.Screen name="StillPlay" component={StillPlay} options={{headerShown: false}} />
+          
+          <Stack.Screen name="PlayingOnImpact" component={PlayingOnImpact} options={{headerShown: false}} />
+          <Stack.Screen name="EditTeams" component={EditTeams} options={{headerShown: false}} />
+          <Stack.Screen name="EditAfterMatch" component={EditAfterMatch} options={{headerShown: false}} />
+          <Stack.Screen name="DeleteTeam" component={DeleteTeam} options={{headerShown: false}} />
+          <Stack.Screen name="SwitchTeams" component={SwitchTeams} options={{headerShown: false}} />
+          <Stack.Screen name="MultipleTeam" component={MultipleTeam} options={{headerShown: false}} />
+          <Stack.Screen name="IncorrectLineup" component={IncorrectLineup} options={{headerShown: false}} />
+          <Stack.Screen name="PlayerDoNotPlay" component={PlayerDoNotPlay} options={{headerShown: false}} />
+          <Stack.Screen name="ContestJoin" component={ContestJoin} options={{headerShown: false}} />
+          <Stack.Screen name="PublicPrivateContest" component={PublicPrivateContest} options={{headerShown: false}} />
+          <Stack.Screen name="FlexibileContest" component={FlexibileContest} options={{headerShown: false}} />
+          <Stack.Screen name="UnfilledContest" component={UnfilledContest} options={{headerShown: false}} />
+          <Stack.Screen name="FindContest" component={FindContest} options={{headerShown: false}} />
+
+          <Stack.Screen name="ScoresAndPoints" component={ScoresAndPoints} options={{headerShown: false}} />
+          <Stack.Screen name="ScorePoints" component={ScorePoints} options={{headerShown: false}} />
+          <Stack.Screen name="PointsNotUpdated" component={PointsNotUpdated} options={{headerShown: false}} />
+          <Stack.Screen name="PointsForSuperOver" component={PointsForSuperOver} options={{headerShown: false}} />
+          <Stack.Screen name="SubstitutePlayer" component={SubstitutePlayer} options={{headerShown: false}} />
+
+          <Stack.Screen name="HSMyBalance" component={HSMyBalance} options={{headerShown: false}} />
+          <Stack.Screen name="WithDrawWinnings" component={WithDrawWinnings} options={{headerShown: false}} />
+          <Stack.Screen name="WithdrawalRequest" component={WithdrawalRequest} options={{headerShown: false}} />
+          <Stack.Screen name="CheckStatusWithdrawal" component={CheckStatusWithdrawal} options={{headerShown: false}} />
+          <Stack.Screen name="WithdrawalBankAccDetails" component={WithdrawalBankAccDetails} options={{headerShown: false}} />
+          <Stack.Screen name="WithdrawalRequestCancel" component={WithdrawalRequestCancel} options={{headerShown: false}} />
+          <Stack.Screen name="DiscountBonus" component={DiscountBonus} options={{headerShown: false}} />
+          <Stack.Screen name="AddCashMyBalance" component={AddCashMyBalance} options={{headerShown: false}} />
+          <Stack.Screen name="ManageWallets" component={ManageWallets} options={{headerShown: false}} />
+          <Stack.Screen name="ManageCards" component={ManageCards} options={{headerShown: false}} />
+
+          <Stack.Screen name="Winnings" component={Winnings} options={{headerShown: false}} />
+          <Stack.Screen name="InformCashPrize" component={InformCashPrize} options={{headerShown: false}} />
+          <Stack.Screen name="ReceiveMyWinnings" component={ReceiveMyWinnings} options={{headerShown: false}} />
+          <Stack.Screen name="Distributed" component={Distributed} options={{headerShown: false}} />
+          <Stack.Screen name="TaxWinnings" component={TaxWinnings} options={{headerShown: false}} />
+
+          
         </>
       ) : (
         <>
+
+
          <Stack.Screen name="LoginEmail" component={LoginEmail} options={{headerShown: false}} />
         <Stack.Screen name="otp" component={Otp} options={{headerShown: false}} />
         <Stack.Screen name="CarouselScreen" component={CarouselScreen} options={{headerShown: false}} />
@@ -233,7 +324,10 @@ function StackNavigator({isAuthenticated, setIsAuthenticated}) {
           <Stack.Screen name="CricketPonits" component={CricketPonits} options={{headerShown: false}} />
           <Stack.Screen name="Football" component={Football} options={{headerShown: false}} />
 
-          
+       
+       
+
+
           <Stack.Screen name="DrawerNavigation">
             {() => <DrawerNavigation setIsAuthenticated={setIsAuthenticated} />}
           </Stack.Screen>

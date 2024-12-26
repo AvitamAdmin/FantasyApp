@@ -171,7 +171,7 @@ import {
                   source={require("../../assets/RegisterPage.png")}
                   style={{ width: 200, height: 160 }}
                 />
-                <Text style={{ fontSize: hp(3.4), color: "#fff", fontWeight: "bold" }}>
+                <Text style={{ fontSize: hp(2.4), color: "#fff", fontWeight: "bold" }}>
                   Hi! Register and Start Winning
                 </Text>
               </View>
@@ -196,7 +196,7 @@ import {
                   }}
                 >
                   <View>
-                    <Text style={{ color: "#fff", fontSize: hp(2.2) }}>Name</Text>
+                    <Text style={{ color: "#fff", fontSize: hp(2.0) }}>Name</Text>
                   </View>
                   <View
                     style={{
@@ -235,7 +235,7 @@ import {
                   }}
                 >
                   <View>
-                    <Text style={{ color: "#fff", fontSize: hp(2.2) }}>
+                    <Text style={{ color: "#fff", fontSize: hp(2.0) }}>
                       Mobile Number
                     </Text>
                   </View>

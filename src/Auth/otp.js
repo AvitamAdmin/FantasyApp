@@ -23,6 +23,28 @@ const Otp = ({ route }) => {
    const [loading, setLoading] = useState(false);
    const inputs = useRef([]);
 
+   const [maskedEmail, setMaskedEmail] = useState("");
+
+  useEffect(() => {
+    const fetchEmail = async () => {
+      try {
+        const email = await AsyncStorage.getItem("email"); // Await the email
+        if (email) {
+          setMaskedEmail(maskEmail(email));
+        }
+      } catch (error) {
+        console.error("Error fetching email from AsyncStorage:", error);
+      }
+    };
+
+    fetchEmail();
+  }, []);
+
+  const maskEmail = (email) => {
+    const [name, domain] = email.split("@");
+    const maskedName = name.slice(0, 3) + "*".repeat(name.length - 3); // First 3 characters and mask the rest
+    return `${maskedName}@${domain}`;
+  };
    
   // Focus on the next field when user types
   const focusNextField = (index, value) => {
@@ -55,9 +77,12 @@ const Otp = ({ route }) => {
       const email = await AsyncStorage.getItem("email"); // Await the value of email
 
       const body = {
-        otp: otpString, // Use the string version of OTP
-        email: email,   // Email fetched from AsyncStorage
-      };
+        userDtoList:[{
+          otp: otpString, // Use the string version of OTP
+          email: email,   // Email fetched from AsyncStorage
+    
+        }]}
+     
   
       console.log("Request Body:", body);
   
@@ -66,7 +91,7 @@ const Otp = ({ route }) => {
         body
       );
   
-      if (response.data.success === true) {
+      if (response?.data?.success === true) {
         const token = response.data.token;
         await AsyncStorage.setItem('jwtToken', token); // Save JWT token
         await AsyncStorage.setItem("email",  response.data.email); 
@@ -95,9 +120,12 @@ const Otp = ({ route }) => {
     try {
         const email = await AsyncStorage.getItem("email"); 
         const body = {
-         
-            email: email,   // Email fetched from AsyncStorage
-          };
+          userDtoList: [
+            {
+              email: email,
+            },
+          ],
+        };
       setLoading(true);
       await axios.post("http://192.168.0.137:8080/admin/email/send-otp", body
        );
@@ -141,7 +169,7 @@ const Otp = ({ route }) => {
     {/* Header Content */}
     <View style={styles.headerTextContainer}>
       <Text style={styles.headerTitle}>Almost There!</Text>
-      <Text style={styles.headerSubtitle}>Please enter the OTP sent on 9*******19</Text>
+      <Text style={styles.headerSubtitle}>Please enter the OTP sent on {maskedEmail}</Text>
     </View>
   </View>
       </View>
@@ -197,6 +225,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     fontSize: 18,
     borderRadius: 5,
+    color:"#000",
+    backgroundColor:"#EAEAEA"
   },
   resendContainer: {
     flexDirection: "row",
@@ -206,10 +236,14 @@ const styles = StyleSheet.create({
   },
   resendText: {
     opacity: 0.6,
+    color: "#000",
+
   },
   resendButton: {
     fontWeight: "bold",
     marginLeft: 5,
+    color: "#000",
+
   },
   button: {
     padding: 10,
@@ -248,7 +282,7 @@ const styles = StyleSheet.create({
     header:{
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       flexDirection:"row",
      width:"95%",
     },
