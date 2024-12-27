@@ -10,8 +10,8 @@ import {
   Image,
   TouchableOpacity
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import {useNavigation} from '@react-navigation/core';
 import { showMessage } from "react-native-flash-message";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -62,6 +62,7 @@ const Otp = ({ route }) => {
   // OTP Verification
   const verifyOtp = async () => {
     const otpString = otp.join("");
+  
     if (otpString.length !== 6) {
       showMessage({
         message: "Invalid OTP",
@@ -74,46 +75,52 @@ const Otp = ({ route }) => {
     setLoading(true);
   
     try {
-      const email = await AsyncStorage.getItem("email"); // Await the value of email
-
+      const email = await AsyncStorage.getItem("email");
+  
+      if (!email) {
+        throw new Error("Email not found in AsyncStorage");
+      }
+  
       const body = {
-        userDtoList:[{
-          otp: otpString, // Use the string version of OTP
-          email: email,   // Email fetched from AsyncStorage
-    
-        }]}
-     
+        userDtoList: [
+          {
+            otp: otpString,
+            email: email,
+          },
+        ],
+      };
   
-      console.log("Request Body:", body);
+      console.log("Sending OTP validation request:", body);
   
-      const response = await axios.post( api +
-        "/admin/email/validate-otp", 
-        body
-      );
+      const response = await axios.post(api + "/admin/email/validate-otp", body);
+  
+      console.log("Response received:", response.data);
   
       if (response?.data?.success === true) {
-        const token = response.data.token;
-        await AsyncStorage.setItem('jwtToken', token); // Save JWT token
-        await AsyncStorage.setItem("email",  response.data.email); 
+        const token = response.data.userDtoList[0]?.token;
   
-        navigation.navigate("Nameregister" );
-        console.log(response.data.message, "OTP Sent");
+        if (token) {
+          await AsyncStorage.setItem("jwtToken", token);
+        }
+  
+        console.log("Navigating to Nameregister");
+        navigation.navigate("Nameregister");
       } else {
-        console.log("Invalid email");
-  
+        throw new Error("Invalid OTP or response");
       }
     } catch (error) {
+      console.error("Verify OTP Error:", error);
       showMessage({
         message: "Verification Failed",
-        description: "Invalid OTP. Please try again.",
+        description: error.message || "Invalid OTP. Please try again.",
         type: "danger",
       });
-      console.log(error,"verify otp error");
-      
     } finally {
       setLoading(false);
     }
   };
+  
+  
 
    // Resend OTP
    const resendOtp = async () => {
@@ -193,9 +200,18 @@ const Otp = ({ route }) => {
                 <Text style={styles.resendButton}>RESEND OTP</Text>
               </Pressable>
             </View>
-            <Pressable onPress={verifyOtp} style={styles.button}>
-              <Text style={styles.buttonText}>{loading ? "Verifying..." : "LET'S PLAY"}</Text>
-            </Pressable>
+            <Pressable
+  onPress={() => {
+    verifyOtp().catch((error) => {
+      console.error("Error in OTP verification:", error);
+    });
+  }}
+  style={styles.button}
+  disabled={loading} // Disable button while loading
+>
+  <Text style={styles.buttonText}>{loading ? "Verifying..." : "LET'S PLAY"}</Text>
+</Pressable>
+
           </View>
           </>
   );
