@@ -8,7 +8,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import TopCreateScreen from './TopCreateScreen';
-import {resetFinalPlayerSelected} from '../../../../Redux/Slice'
+import {resetFinalPlayerSelected} from '../../../../Redux/Slice';
 
 const CreateTeam = () => {
   const navigation = useNavigation();
@@ -20,12 +20,22 @@ const CreateTeam = () => {
     state => state.fantasy.finalPlayerSelected.length,
   );
 
-  const team1count = useSelector((state) =>state.fantasy.selectedTeam1.length);
-  
+  const team1count = useSelector(state => state.fantasy.selectedTeam1.length);
+  const team2count = useSelector(state => state.fantasy.selectedTeam2.length);
+  console.log(team2count, 'team2count from createTeam screen');
+
+  const team1ShortName = useSelector(state => state.fantasy.team1ShortName);
+  const team2ShortName = useSelector(state => state.fantasy.team2ShortName);
 
   const handleResetSelection = () => {
     dispatch(resetFinalPlayerSelected());
   };
+  
+  const handleNext = () =>{
+    if(playercount==11){
+      navigation.navigate("MyTeam")
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -47,7 +57,9 @@ const CreateTeam = () => {
             flexDirection: 'row',
           }}>
           <View style={{flexDirection: 'row', gap: 10}}>
-            <Pressable onPress={() => navigation.goBack()}>
+            <Pressable onPress={() =>{ navigation.goBack()
+              handleResetSelection();
+            }}>
               <Text style={{color: '#fff', fontWeight: 'bold'}}>{'<'}-</Text>
             </Pressable>
             <View style={{flexDirection: 'column'}}>
@@ -99,11 +111,17 @@ const CreateTeam = () => {
           }}>
           <View style={{flexDirection: 'row', gap: 10}}>
             {/* <Image/> */}
-            <Text style={{color: '#000'}}>{team1count}</Text>
+            <View style={{flexDirection: 'column', gap: 5}}>
+              <Text style={{color: '#000'}}>{team1ShortName}</Text>
+              <Text style={{color: '#000'}}>{team1count}</Text>
+            </View>
           </View>
           <View style={{flexDirection: 'row', gap: 10}}>
             {/* <Image/> */}
-            <Text style={{color: '#000'}}>1</Text>
+            <View style={{flexDirection: 'column', gap: 5}}>
+              <Text style={{color: '#000'}}>{team2ShortName}</Text>
+              <Text style={{color: '#000'}}>{team2count}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -234,9 +252,62 @@ const CreateTeam = () => {
         </LinearGradient>
       </View>
 
-      <View style={{flex:1}}>
-        <TopCreateScreen/>
+      <View style={{flex: 1}}>
+        <TopCreateScreen />
       </View>
+      <View
+             style={{
+               display: 'flex',
+               flexDirection: 'row',
+               width: '100%',
+               padding: 15,
+               justifyContent: 'space-evenly',
+             }}>
+             <View style={{width: wp('45%')}}>
+               <Pressable
+                //  onPress={() => navigation.navigate('MYContest')}
+                 style={{
+                   backgroundColor: '#000',
+                   paddingTop: 10,
+                   paddingBottom: 10,
+                   borderRadius: 10,
+                   width: wp('43%'),
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'center',
+                   alignItems: 'center',
+                   gap: 5,
+                 }}>
+                
+                 <Text style={{fontWeight: '400', color: '#fff', fontSize: hp(2)}}>
+                   PREVIEW
+                 </Text>
+             
+               </Pressable>
+             </View>
+             <View style={{width: wp('43%')}}>
+               <Pressable
+                 onPress={() => handleNext()}
+                 style={{
+                   backgroundColor: '#000',
+                   paddingTop: 8,
+                   paddingBottom: 8,
+                   borderRadius: 10,
+                   width: wp('43%'),
+                   display: 'flex',
+                   flexDirection: 'row',
+                   justifyContent: 'center',
+                   alignItems: 'center',
+                   gap: 5,
+                 }}>
+                
+                 <Text style={{fontWeight: '400', color: '#fff', fontSize: hp(2)}}>
+                   NEXT
+                 </Text>
+               
+               </Pressable>
+             </View>
+           </View>
     </SafeAreaView>
   );
 };

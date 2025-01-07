@@ -22,6 +22,11 @@ import {
   getteamIdForCount,
   setplayerId,
   setselectedTeam1,
+  setselectedTeam2,
+  setTeamCount,
+  setwicketKeeperId,
+  setplayerRoleId,
+  setselectedPlayerTeamId
 } from './../../../../Redux/Slice';
 
 const Wicketerscreen = () => {
@@ -30,13 +35,21 @@ const Wicketerscreen = () => {
   const [loading, setLoading] = useState(false); // State to handle loading
   const [PlayerRoleId, setPlayerRoleId] = useState([]);
   const [WicketKeeperId, setWicketKeeperId] = useState([]);
+  const [id, setId] = useState('');
   const dispatch = useDispatch();
   const Team1 = useSelector(state => state.fantasy.selectedTeam1);
 
   const matchesTeam1Id = useSelector(state => state.fantasy.matchesTeam1Id);
   const matchesTeam2Id = useSelector(state => state.fantasy.matchesTeam2Id);
 
+  // dispatch(setwicketKeeperId(id));
   // Fetch data including players
+
+  useEffect(() => {
+    if (id) {
+      dispatch(setwicketKeeperId(id));
+    }
+  }, [id, dispatch]);
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -64,7 +77,7 @@ const Wicketerscreen = () => {
       const response = await axios.post(`${api}/admin/player`, body, {headers});
 
       // Filter players based on team IDs
-      const filteredPlayers = response.data.playerList.filter(
+      const filteredPlayers = response.data.playerDtoList.filter(
         item => item.teamId == matchesTeam1Id || item.teamId == matchesTeam2Id,
       );
 
@@ -101,12 +114,20 @@ const Wicketerscreen = () => {
       });
 
       // Filter player roles
-      const filteredPlayerRoles = response.data.playerRoleList.filter(
+      const filteredPlayerRoles = response.data.playerRoleDtoList.filter(
         item =>
           item.playerRole === 'Wicket-Keepers' &&
           Array.isArray(playerRoleId) &&
           playerRoleId.includes(item.recordId),
+        // setWicketKeeperId(item.recordId)
       );
+
+      const wicketKeeper = response.data.playerRoleDtoList.find(
+        item => item.playerRole === 'Wicket-Keepers',
+      );
+      if (wicketKeeper) {
+        setId(wicketKeeper.recordId);
+      }
 
       // Extract record IDs
       const wicketKeeperRecordIds = filteredPlayerRoles.map(
@@ -120,24 +141,27 @@ const Wicketerscreen = () => {
         'wicketKeeperRecordIds from playerRoleList',
       );
     } catch (error) {
-      console.error('Error fetching player roles:', error);
+      console.error('Error fetching player roles:', error);  
     }
   };
 
   const [selectedPlayers, setSelectedPlayers] = useState({});
-  const handleAdd = (playerId, teamID) => {
+  const handleAdd = (playerId, teamID, playerRoleId) => {
     console.log(teamID, 'Dispatching teamID');
     console.log(playerId, 'Dispatching playerId');
 
-    dispatch(getteamIdForCount(teamID));
+    // dispatch(getteamIdForCount(teamID));
     dispatch(setplayerId(playerId));
-    dispatch(setselectedTeam1(teamID));
-    setSelectedPlayers(prevState => ({
-      ...prevState,
-      [playerId]: !prevState[playerId],
-    }));
-    dispatch(setfinalPlayerSelected(playerId));
+    dispatch(setplayerRoleId(playerRoleId));
+    dispatch(setselectedPlayerTeamId(teamID))
+    // dispatch(setselectedTeam2(teamID));
 
+    // setSelectedPlayers(prevState => ({
+    //   ...prevState,
+    //   [playerId]: !prevState[playerId],
+    // }));
+    dispatch(setfinalPlayerSelected(playerId)); 
+    // dispatch(setTeamCount(teamID));
     const count1 = Team1.length;
     console.log(count1, 'team 1 count from wicketer screen');
   };
@@ -148,7 +172,7 @@ const Wicketerscreen = () => {
 
   return (
     <View style={styles.container}>
-      {loading ? (
+      {loading ? ( 
         <ActivityIndicator size="large" color="#0000ff" />
       ) : Player.length > 0 ? (
         <ScrollView
@@ -207,7 +231,7 @@ const Wicketerscreen = () => {
                 return item.playerRoleId == WicketKeeperId ? (
                   <Pressable
                     onPress={() => {
-                      handleAdd(item.recordId, item.teamId),
+                      handleAdd(item.recordId, item.teamId, item.playerRoleId),
                         console.log(item.recordId);
                     }}
                     key={index}
