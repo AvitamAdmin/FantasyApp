@@ -10,20 +10,23 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
-  ImageBackground,
+  ScrollView,
+  Image,
   ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
+import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {api} from '../envfile/api';
-
-const Nameregister = () => {
+import LinearGradient from 'react-native-linear-gradient';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+const ReferAndEarn = () => {
   const navigation = useNavigation();
   const [userName, setuserName] = useState('');
   const [keyboardVisible, setKeyboardVisible] = useState(false);
@@ -56,12 +59,16 @@ const Nameregister = () => {
     try {
       const email = await AsyncStorage.getItem('email');
       const body = {
-        username: userName,
-        email: email,
+        userDtoList: [
+          {
+            userName: userName,
+            email: email,
+          },
+        ],
       };
       console.log(body, 'body');
 
-      const response = await axios.post(api + '/admin/email/saveUserName',body,);
+      const response = await axios.post(api + '/admin/email/save-userName',body,);
       console.log(response.data, 'response from api');
 
       setLoading(false);
@@ -83,21 +90,51 @@ const Nameregister = () => {
   };  
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    
+
+<SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView
-        style={styles.keyboardAvoidingView}
-        behavior={Platform.OS === 'android' ? 'padding' : 'height'}>
+        style={{flex: 1}}
+        behavior={Platform.OS === 'andriod' ? 'padding' : 'height'}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          {/* <ImageBackground
-            source={require("../../../assets/Login Page 3.png")}
-            resizeMode="cover"
-            style={styles.backgroundImage}
-          > */}
-          <View style={styles.container}>
+          <LinearGradient
+            style={{
+              flex: 1,
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+            colors={['#020202', '#192451', '#243373', '#3b53bd']}>
+            <ScrollView
+              contentContainerStyle={{
+                flexGrow: 1,
+                justifyContent: 'space-between',
+              }}
+              keyboardShouldPersistTaps="handled">
+                <Toast />
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: wp('100%'),
+                  paddingTop: 50,
+                }}>
+                <Image
+                  source={require('../../assets/LogoFinal.png')}
+                  style={{width: wp(53), height: hp(15)}}
+                  resizeMode="contain"
+                />
+              </View>
+              
+            <View style={styles.container}>
             <Text style={styles.labelText}>Username</Text>
 
             <View style={styles.inputContainer}>
-              <AntDesign name="mail" size={24} color="white" />
+              <AntDesign name="user" size={24} color="white" />
               <TextInput
                 value={userName}
                 onChangeText={text => setuserName(text)}
@@ -117,14 +154,29 @@ const Nameregister = () => {
               </Pressable>
             )}
           </View>
-          {/* </ImageBackground> */}
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '100%',
+                }}>
+                <Image
+                  source={require('../../assets/Final_img.png')}
+                  style={{width: wp('100%'), height: hp('36%')}}
+                  resizeMode="contain"
+                />
+              </View>
+            </ScrollView>
+          </LinearGradient>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
-export default Nameregister;
+export default ReferAndEarn;
 
 const styles = StyleSheet.create({
   safeArea: {

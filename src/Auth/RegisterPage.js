@@ -9,8 +9,6 @@ import {
   } from "react-native";
   import React, { useState } from "react";
   import LinearGradient from 'react-native-linear-gradient';
-
-  
   import { useNavigation } from "@react-navigation/native";
   import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
   import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -142,7 +140,8 @@ import {
             >
               <View style={{ width: wp("30%") }}>
                 <Pressable onPress={() => navigation.goBack()} style={styles.back}>
-            <Text >Icon</Text>
+                <AntDesign name="back" size={20} color="#fff" />
+
                 </Pressable>
               </View>
             </View>
