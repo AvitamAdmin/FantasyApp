@@ -42,7 +42,7 @@ const AddCash = () => {
 
       <View
         style={{
-          backgroundColor: "#3385ff",
+          backgroundColor: "#3e57c4",
           padding: 10,
           alignItems: "center",
           borderBottomEndRadius: 15,
@@ -164,7 +164,7 @@ const AddCash = () => {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between", 
-              width: "30%",
+              width: "34%",
               borderWidth: 1,
               borderColor: "#00A000",
               borderRadius: 5,
@@ -172,8 +172,8 @@ const AddCash = () => {
               // padding: 2,
             }}
           >
-            <View style={{ width: "14%", }}>
-              <Text style={{ fontSize: 20, fontWeight: "500" ,color:"#000",paddingLeft:5}}>₹</Text>
+            <View style={{ width: "16%", }}>
+              <Text style={{ fontSize: 20, fontWeight: "400" ,color:"#000",paddingLeft:5}}>₹</Text>
             </View>
             <TextInput
               style={{
@@ -184,7 +184,7 @@ const AddCash = () => {
               onChangeText={handleAmountChange}
               keyboardType="numeric"
             />
-            <View style={{ width: "20%" }}>
+            <View style={{ width: "23%" }}>
               <Pressable onPress={() => handleAmountChange("")} >
                 <AntDesign name="closecircleo" size={17} color="black" />
               </Pressable>
@@ -256,7 +256,7 @@ const AddCash = () => {
         <Pressable
         onPress={()=>navigation.navigate("PAYMENT OPTIONS")}
           style={{
-            backgroundColor: "#3385ff",
+            backgroundColor: "#3e57c4",
             padding: 10,
             width: "100%",
             alignItems: "center",

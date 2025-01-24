@@ -140,7 +140,7 @@ import {
             >
               <View style={{ width: wp("30%") }}>
                 <Pressable onPress={() => navigation.goBack()} style={styles.back}>
-                <AntDesign name="back" size={20} color="#fff" />
+                <Feather name="arrow-left" size={20} color="#fff" />
 
                 </Pressable>
               </View>

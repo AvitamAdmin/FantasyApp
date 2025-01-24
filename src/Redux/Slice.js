@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { teamsArray } from "../jsondata/cskjson";
+import { teamsArray } from "../../jsonData/cskjson";
+
 
 
 const initialState = {
@@ -12,7 +13,6 @@ const initialState = {
   matchCountdown: "",
   team1logo: [],
   team2logo: [],
-  teamPlayers: [],
 };
 
 
@@ -71,9 +71,6 @@ const userSlice = createSlice({
       // Clear the impactPlayerSelected array and then add the new impact player
       state.team2logo = [payload];
     },
-    getTeamPlayers: (state, { payload }) => {
-      state.teamPlayers = payload;
-    },
   },
 });
 
@@ -89,7 +86,6 @@ export const {
   getMatchCountdown,
   getTeam1logo,
   getTeam2logo,
-  getTeamPlayers,
 } = userSlice.actions;
 
 

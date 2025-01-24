@@ -1,20 +1,20 @@
-import { Image, Pressable, ScrollView, StyleSheet, Text, View ,Dimensions} from "react-native";
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
-// import { Feather } from "@expo/vector-icons";
-// import { Octicons } from "@expo/vector-icons";
-// import { FontAwesome6 } from "@expo/vector-icons";
-// import { Entypo } from "@expo/vector-icons";
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { Image, Pressable, StyleSheet, Text, View,ScrollView, Dimensions } from 'react-native'
+import React from 'react'
+import Octicons from 'react-native-vector-icons/Octicons';
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import Entypo from "react-native-vector-icons/Entypo";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { useNavigation } from '@react-navigation/native';
 
-const MyTeam = () => {
+
+const MyTeams = () => {
   const navigation = useNavigation();
-  
   const screenWidth = Dimensions.get('window').width;
 
   const isTablet = screenWidth >= 768;
-  return (
-    <ScrollView>
+  return ( 
+
+
       <View
       style={{
         display: "flex",
@@ -22,8 +22,8 @@ const MyTeam = () => {
         flexDirection: "column",
         height: hp("100%"),
         backgroundColor: "#fff",
-      }}
-    >
+      }}>
+         <Pressable onPress={() => navigation.navigate('TeamPreview')} >
       <ScrollView style={{
         display:"flex",
         flexDirection:"column",
@@ -45,10 +45,10 @@ const MyTeam = () => {
           }}
         >
           <Image
-            source={require("../../../../assets/CreateTeamPreview.png")}
+            source={require("../../../../../assets/CreateTeamPreview.png")}
             style={{
               width: wp("100%"),
-              height: hp("31%"),
+              height: hp("28%"),
               borderRadius: 8,
               opacity: 0.9,
             }}
@@ -85,32 +85,32 @@ const MyTeam = () => {
                 width: isTablet ? wp('20%') : wp('26%'),
                 flexDirection: "row",
                 justifyContent: "space-evenly",
-                alignItems: "center",
+                alignItems: "center",gap:10
               }}
             >
-              <Text style={{ fontWeight: "bold", color: "#fff" }}>
+              <Text style={{ fontWeight: "bold", color: "#fff" ,fontSize:hp(1.6)}}>
                 Shivam11’s
               </Text>
-              <Text style={{ fontWeight: "bold", color: "#fff" }}>T1</Text>
+              <Text style={{ fontWeight: "bold", color: "#fff",fontSize:hp(1.6) }}>(T1)</Text>
             </View>
             <View
               style={{
                 display: "flex",
                 width: wp("30%"),
                 flexDirection: "row",
-                justifyContent: "space-between",
+                justifyContent: "flex-end",
                 alignItems: "center",
               }}
             >
-              {/* <Pressable>
+            {/*  <Pressable>
                 <Octicons name="pencil" size={20} color="#fff" />
               </Pressable>
               <Pressable>
                 <FontAwesome6 name="copy" size={20} color="#fff" />
-              </Pressable>
+              </Pressable> */}
               <Pressable>
                 <Entypo name="share" size={24} color="#fff" />
-              </Pressable> */}
+              </Pressable>
             </View>
           </View>
 
@@ -150,9 +150,10 @@ const MyTeam = () => {
                   }}
                 >
                   <Image
-                    source={require("../../../../assets/MSDhoni.png")}
+                    source={require("../../../../../assets/MSDhoni.png")}
                     style={{ height: isTablet ? 100 : 85, 
                       width: isTablet ? 100 : 85  }}
+                      
                   />
                   <View
                     style={{
@@ -165,7 +166,7 @@ const MyTeam = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Text style={{ fontWeight: "bold", color: "#000" }}>
+                    <Text style={{ fontWeight: "bold", color: "#000" ,fontSize:hp(1.6)}}>
                       CSK
                     </Text>
                   </View>
@@ -205,7 +206,7 @@ const MyTeam = () => {
                   }}
                 >
                   <Image
-                    source={require("../../../../assets/MSDhoni.png")}
+                    source={require("../../../../../assets/MSDhoni.png")}
                     style={{ height: isTablet ? 100 : 85, 
                       width: isTablet ? 100 : 85  }}
                   />
@@ -229,7 +230,7 @@ const MyTeam = () => {
                       style={{
                         fontWeight: "bold",
                         color: "#fff",
-                        fontSize: hp(1.8)
+                        fontSize: hp(1.7)
                       }}>
                       VC
                     </Text>
@@ -239,13 +240,13 @@ const MyTeam = () => {
                       position: "absolute",
                       bottom: 0,
                       width: wp("22%"),
-                      backgroundColor: "#f27",
+                      backgroundColor: "#fc3a3a",
                       borderRadius: 8,
                       justifyContent: "center",
                       alignItems: "center",
                     }}
                   >
-                    <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                    <Text style={{ fontWeight: "bold", color: "#fff",fontSize:hp(1.6) }}>
                       RCB
                     </Text>
                   </View>
@@ -272,7 +273,7 @@ const MyTeam = () => {
               }}
             >
               <Image
-                source={require("../../../../assets/MSDhoni.png")}
+                source={require("../../../../../assets/MSDhoni.png")}
                 style={{ height: isTablet ? 100 : 85, 
                   width: isTablet ? 100 : 85  }}
                 />
@@ -291,7 +292,7 @@ const MyTeam = () => {
                 }}
               >
                 <Image
-                  source={require("../../../../assets/ImpactPreviewNotSelected.png")}
+                  source={require("../../../../../assets/ImpactPreviewNotSelected.png")}
                   style={{ width: 22, height: 23 }}
                 />
               </View>
@@ -306,14 +307,14 @@ const MyTeam = () => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontWeight: "bold", color: "#000" }}>RCB</Text>
+                <Text style={{ fontWeight: "bold", color: "#000",fontSize:hp(1.6) }}>RCB</Text>
               </View>
             </View>
             
             </View>
           </View>
 
-          <View  style={{
+    {/*     <View  style={{
               display: "flex",
               width: wp("100%"),
               flexDirection: "row",
@@ -352,7 +353,7 @@ const MyTeam = () => {
                 <Text style={{ fontWeight: "bold", color: "#fff", fontSize:hp(1.6) }}>RCB</Text>
                 <Text style={{ fontWeight: "bold", color: "#fff", fontSize:hp(1.6) }}>4</Text>
               </View>
-          </View>
+          </View> */} 
 
           <View
             style={{
@@ -361,6 +362,7 @@ const MyTeam = () => {
               flexDirection: "row",
               justifyContent: "space-around",
               alignItems: "center",
+              paddingBottom:10
             }}
           >
             <Text style={{ fontWeight: "bold", color: "#fff", fontSize:hp(1.6) }}>WK  2</Text>
@@ -368,37 +370,35 @@ const MyTeam = () => {
             <Text style={{ fontWeight: "bold", color: "#fff" , fontSize:hp(1.6)}}>AR  2</Text>
             <Text style={{ fontWeight: "bold", color: "#fff" , fontSize:hp(1.6)}}>BOWL  2</Text>
           </View>
+
+          <View style={{
+              display: "flex",
+              width: wp('100%'),
+              flexDirection: "row",
+              padding: 10,
+              justifyContent: "center",
+              backgroundColor: "#0101013d",
+              borderBottomLeftRadius: 10,
+              borderBottomRightRadius: 10,
+              
+            }}>
+            <Text style={{ color:'#fff', fontWeight:'bold', fontSize: hp(1.5)}}>
+              POINTS : 309
+            </Text>
+          </View>
         </View>
       </View>
 
-      
+     
       </View>
       
       </ScrollView>
-
-      <View style={{display: "flex",
-        width: wp("100%"),
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        padding: 10,
-      }}>
-
-       <Pressable onPress={() => navigation.navigate("CreateTeam")}
-          style={{display:"flex",flexDirection: 'row',gap:10,width: wp("55%"),backgroundColor:"#3E57C4",padding:9,borderRadius: 20,justifyContent:"center",alignItems:"center"}}>
-        {/* <View><Feather name="plus-circle" size={20} color="#fff" /></View> */}
-        <Text style={{color:"#fff",alignItems:"center",fontWeight:"bold"}}>
-                CREATE A TEAM
-        </Text>
-        </Pressable>
+      </Pressable>
       </View>
-    </View>
-    </ScrollView>
-  );
-};
 
-export default MyTeam;
+    
 
-const styles = StyleSheet.create({});
+  )
+}
 
-
+export default MyTeams

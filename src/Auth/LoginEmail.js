@@ -240,7 +240,9 @@ const LoginEmail = () => {
                     </Pressable>
                   ) : (
                     <Pressable
-                      onPress={checkEmailAndLogin}
+                      // onPress={checkEmailAndLogin}
+                      onPress={ navigation.navigate('CricketHome')
+                    }
                       style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -251,6 +253,7 @@ const LoginEmail = () => {
                         backgroundColor: '#3757E2',
                         borderRadius: 7,
                       }}>
+                        
                       <Text
                         style={{
                           fontWeight: 'bold',

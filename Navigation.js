@@ -14,11 +14,12 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 // Import Screens
 import Nameregister from './src/Auth/NameRegister';
-import Profile from './src/BottomTabs/Profile';
+// import Profile from './src/BottomTabs/Profile';
 import ReferAndEarn from './src/BottomTabs/ReferAndEarn';
 import FantacyPointsSystems from './src/DrawerScreens/FantacyPointsSystems';
 import HowToPlay from './src/DrawerScreens/HowToPlay';
@@ -120,7 +121,15 @@ import LosingGame from './src/DrawerScreens/Help&SupportFiles/FairPlay/LosingGam
 import HomeNotification from './src/BottomTabs/Home/HomeNotification';
 import All from './src/BottomTabs/Home/All';
 import Offers from './src/BottomTabs/Home/Offer';
-// import AddCash from './src/Screens/PaymentScreen/AddCash';
+import MyBalance from './src/PaymentScreens/MyBalance';
+import VerifyBankAcc from './src/PaymentScreens/VerifyBankAcc';
+import VerifyPanCard from './src/PaymentScreens/VerifyPanCard';
+import KYC from './src/PaymentScreens/KYC';
+import CricketHome from './src/BottomTabs/Home/CricketHome';
+import AddCash from './src/PaymentScreens/AddCash';
+import Withdraw from './src/PaymentScreens/Withdraw';
+import PaymentScreen from './src/PaymentScreens/PaymentScreen';
+import ProfileScreen from './src/BottomTabs/ProfileScreen';
 
 const getHeaderRight = () => {
   const navigation = useNavigation(); // Get navigation context
@@ -145,11 +154,13 @@ const getHeaderRight = () => {
           justifyContent: 'center',
           width: '100%',
         }}>
-        <Pressable
+       <Pressable
           style={{justifyContent: 'flex-start', paddingLeft: 10}}
           onPress={() => navigation.toggleDrawer()} // Ensure it toggles the drawer
         >
-          <Text style={{color: 'white'}}>Menu Icon</Text>
+        <AntDesign name="menufold" size={24} color="white" />
+
+
         </Pressable>
 
         <Image
@@ -410,17 +421,88 @@ function StackNavigator({isAuthenticated, setIsAuthenticated}) {
           <Stack.Screen name="MatchDeadline" component={MatchDeadline} options={{headerShown: false}} />
           <Stack.Screen name="DetailsSafe" component={DetailsSafe} options={{headerShown: false}} />
           <Stack.Screen name="LosingGame" component={LosingGame} options={{headerShown: false}} />
+          <Stack.Screen name="CricketHome" component={CricketHome} options={{ headerShown: false }} />
 
-          {/* <Stack.Screen name="AddCash" component={AddCash} options={{headerShown: false}} /> */}
+          <Stack.Screen name="ADD CASH" component={AddCash}  
+           options={{
+              headerStyle: {
+              backgroundColor: "#3e57c4",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle:{
+            fontSize:hp(1.8)
+           }}}/> 
+
+              <Stack.Screen name="WITHDRAW" component={Withdraw}  
+           options={{
+              headerStyle: {
+              backgroundColor: "#3e57c4",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle:{
+            fontSize:hp(1.8)
+           }}}/>
+
+          <Stack.Screen name="PAYMENT OPTIONS" component={PaymentScreen}  
+           options={{
+              headerStyle: {
+              backgroundColor: "#3e57c4",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle:{
+            fontSize:hp(2)
+           }}}/>
+          <Stack.Screen  name="Verify Account" component={KYC}
+              options={{
+                 headerStyle: {
+                 backgroundColor:"#3e57c4",
+                 borderBottomWidth: 0,
+                 },
+                headerTitleStyle:{
+                fontSize:hp(2)
+                },
+                headerTintColor: "#fff",}}/>
+
+
+                <Stack.Screen name="Verify PAN Card" component={VerifyPanCard}  
+                  options={{
+                    headerStyle: {
+                    backgroundColor: "#3e57c4",
+                  },
+                    headerTintColor: "#fff",
+                    headerTitleStyle:{
+                    fontSize:hp(2)
+                  }}}/>
+
+
+                  <Stack.Screen name="Verify Bank Account" component={VerifyBankAcc}  
+                  options={{
+                    headerStyle: {
+                    backgroundColor: "#3e57c4",
+                  },
+                    headerTintColor: "#fff",
+                    headerTitleStyle:{
+                    fontSize:hp(2)
+                  }}}/>
+ 
+ <Stack.Screen  name="My Balance" component={MyBalance}
+            options={{
+               headerStyle: {
+               backgroundColor:"#3e57c4",
+               borderBottomWidth: 0,
+              },
+              headerTitleStyle:{
+              fontSize:hp(1.9)
+              },
+              headerTintColor: "#fff",}}/>
 
         </>
       ) : (
         <>
 
-
+<Stack.Screen name="CarouselScreen" component={CarouselScreen} options={{headerShown: false}} />
          <Stack.Screen name="LoginEmail" component={LoginEmail} options={{headerShown: false}} />
         <Stack.Screen name="otp" component={Otp} options={{headerShown: false}} />
-        <Stack.Screen name="CarouselScreen" component={CarouselScreen} options={{headerShown: false}} />
         <Stack.Screen name="LoginPhone" component={LoginPhone} options={{headerShown: false}} />
         <Stack.Screen name="RegisterPage" component={RegisterPage} options={{headerShown: false}} />
           <Stack.Screen name="Nameregister" component={Nameregister} options={{headerShown: false}} />
@@ -533,9 +615,12 @@ function BottomTabs({setIsAuthenticated, navigation}) {
         component={ReferAndEarn}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Profile">
-        {() => <Profile setIsAuthenticated={setIsAuthenticated} />}
-      </Tab.Screen>
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{headerShown: false}}
+      />
+      
     </Tab.Navigator>
   );
 }
